@@ -5,7 +5,7 @@ df=pd.read_excel(r'D:\CARHP\trim mapping\cargurus\18-17 cargurus.xlsx', headers=
 
 df2=pd.DataFrame()
 heads=[]
-for i in range(2,df.shape[0]):
+for i in range(1,df.shape[0]):
 		# for j in range(1,df.shape[1]):
 	c={}
 	df2.loc[i,0]=df.iloc[i,0]
@@ -19,17 +19,23 @@ for i in range(2,df.shape[0]):
 	data=json.loads(c)
 	# print(data.keys())
 	for key in data.keys():
-		if key not in heads:
-			heads.append(key)
+		if str(key) in heads:
+			pass
+		else:
+			print(key)
+			heads.append(str(key))
 
 
 
 	for k,v in data.items():
-		df.loc[i,(heads.index(k)+3)]=v
+		df2.loc[i,(heads.index(str(k))+3)]=str(v)
+		print((heads.index(str(k))+3))
+		# df2.to_excel('cargurus json parsed.xlsx')
 
 col=3
 for h in heads:
-	df.iloc[i+1,col]=h
+	print(h)
+	df2.loc[i+1,col]=str(h)
 	col+=1
 
 df2.to_excel('cargurus json parsed.xlsx')
